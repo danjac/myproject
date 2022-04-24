@@ -8,9 +8,9 @@ module.exports = {
         purgeLayersByDefault: true,
     },
     content: [
-        './myproject/templates/**/*.html',
-        './myproject/static/js/**/*.js',
-        // './tailwind-safelist.txt',
+        './templates/**/*.html',
+        './static/js/**/*.js',
+        './tailwind-safelist.txt',
     ],
     keyframes: true,
     variants: {
