@@ -6,7 +6,6 @@ from email.utils import getaddresses
 import environ
 
 BASE_DIR = pathlib.Path(__file__).absolute().parents[2]
-APPS_DIR = BASE_DIR / "myproject"
 
 env = environ.Env()
 
@@ -187,12 +186,12 @@ USE_TZ = True
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 STATIC_URL = env("STATIC_URL", default="/static/")
-STATICFILES_DIRS = [APPS_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 TEMPLATES: list[dict] = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [APPS_DIR / "templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "debug": DEBUG,
