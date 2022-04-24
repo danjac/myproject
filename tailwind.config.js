@@ -10,7 +10,7 @@ module.exports = {
     content: [
         './myproject/templates/**/*.html',
         './myproject/static/js/**/*.js',
-        './tailwind-safelist.txt',
+        // './tailwind-safelist.txt',
     ],
     keyframes: true,
     variants: {
@@ -18,7 +18,7 @@ module.exports = {
     },
     plugins: [
         require('@tailwindcss/forms'),
-        require('@tailwindcss/typography'),
-        require('@tailwindcss/line-clamp'),
+        // require('@tailwindcss/typography'),
+        // require('@tailwindcss/line-clamp'),
     ],
 };
