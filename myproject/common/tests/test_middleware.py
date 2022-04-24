@@ -2,7 +2,7 @@ import pytest
 
 from django_htmx.middleware import HtmxMiddleware
 
-from myproject.common.middleware import CacheControlMiddleware, SearchMiddleware
+from myproject.common.middleware import CacheControlMiddleware
 
 
 @pytest.fixture
@@ -34,20 +34,3 @@ class TestCacheControlMiddleware:
         htmx_mw(req)
         resp = cache_mw(req)
         assert "Cache-Control" not in resp.headers
-
-
-class TestSearchMiddleware:
-    @pytest.fixture
-    def mw(self, get_response):
-        return SearchMiddleware(get_response)
-
-    def test_search(self, rf, mw):
-        req = rf.get("/", {"q": "testing"})
-        mw(req)
-        assert req.search
-        assert str(req.search) == "testing"
-
-    def test_no_search(self, req, mw):
-        mw(req)
-        assert not req.search
-        assert str(req.search) == ""
