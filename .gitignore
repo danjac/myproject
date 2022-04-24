@@ -1,0 +1,57 @@
+*.pyc
+*.egg
+
+*.lock
+
+*.sqlite3
+*.db
+db
+
+*.DS_Store
+
+.cache
+.data
+__pycache__
+.mypy_cache/
+.pytest_cache/
+.vscode/
+.coverage
+.vim/
+
+.idea/
+
+node_modules/
+
+*.bak
+
+logs
+*log
+npm-debug.log*
+
+# Translations
+# *.mo
+*.pot
+
+# Django media/static dirs
+media/
+staticfiles
+
+.ipython/
+.env
+
+celerybeat.pid
+celerybeat-schedule
+
+# Common typos
+:w
+'
+:
+*.swp
+
+# Ansible
+
+.vault_pass
+hosts
+vars.yml
+
+db/audiotrails-volume

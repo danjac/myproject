@@ -1,0 +1,50 @@
+[tool.isort]
+default_section="THIRDPARTY"
+known_first_party="myproject"
+sections=[
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER"
+]
+lines_between_types=1
+group_by_package=true
+order_by_type=true
+line_length = 88
+include_trailing_comma=true
+multi_line_output=3
+
+[tool.coverage.run]
+source=["myproject"]
+omit=[
+    "*/migrations/*",
+    "*/tests/*",
+    "*/settings/*",
+    "**/factories.py",
+    "*/wsgi.py"
+]
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE="myproject.settings.test"
+addopts="-v -x --ff --reuse-db"
+testpaths="myproject"
+
+[mypy]
+python_version = 3.10
+check_untyped_defs = false
+ignore_missing_imports = true
+show_error_codes = true
+warn_unused_ignores = false
+warn_redundant_casts = false
+warn_unused_configs = false
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module="*.tests.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module="*.migrations.*"
+ignore_errors = true

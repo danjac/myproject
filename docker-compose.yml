@@ -1,0 +1,74 @@
+version: '3.8'
+
+x-logging: &default-logging
+    options:
+        max-size: '100k'
+        max-file: '3'
+
+services:
+    postgres:
+        image: postgres:14.1
+        environment:
+            - POSTGRES_PASSWORD=password
+        volumes:
+            - pg_data:/var/lib/postgresql/data
+        stop_grace_period: '3s'
+        logging: *default-logging
+        healthcheck:
+            test: ['CMD', 'pg_isready', '-U', 'postgres']
+            interval: 1s
+            timeout: 3s
+            retries: 30
+
+    redis:
+        image: redis:6.2.6-buster
+        stop_grace_period: '3s'
+        logging: *default-logging
+        healthcheck:
+            test: ['CMD', 'redis-cli', 'ping']
+            interval: 1s
+            timeout: 3s
+            retries: 30
+
+    mailhog:
+        image: mailhog/mailhog:v1.0.1
+        stop_grace_period: '3s'
+        logging: *default-logging
+        ports:
+            - '8025:8025'
+            - '1025:1025'
+
+    honcho:
+        build:
+            context: .
+        environment:
+            DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
+            EMAIL_HOST: mailhog
+            EMAIL_PORT: 1025
+            REDIS_URL: redis://redis:6379/0
+            SECRET_KEY: seekrit!
+            TWITTER_ACCOUNT: casts_j
+        restart: on-failure
+        privileged: true
+        tty: true
+        stop_grace_period: '3s'
+        logging: *default-logging
+        ports:
+            - '8000:8000'
+        depends_on:
+            postgres:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        volumes:
+            - ./:/app
+            - /app/node_modules
+        command: [
+            'honcho',
+            'start',
+            '-f',
+            './Procfile.local'
+        ]
+
+volumes:
+    pg_data: {}
