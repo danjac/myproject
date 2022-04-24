@@ -5,8 +5,6 @@ from email.utils import getaddresses
 
 import environ
 
-from django.urls import reverse_lazy
-
 BASE_DIR = pathlib.Path(__file__).absolute().parents[2]
 APPS_DIR = BASE_DIR / "myproject"
 
@@ -36,15 +34,6 @@ CACHES = {
 
 RQ_QUEUES = {
     "default": {
-        "USE_REDIS_CACHE": "default",
-    },
-    "feeds": {
-        "USE_REDIS_CACHE": "default",
-    },
-    "feeds:frequent": {
-        "USE_REDIS_CACHE": "default",
-    },
-    "feeds:sporadic": {
         "USE_REDIS_CACHE": "default",
     },
     "mail": {
@@ -106,8 +95,6 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "django_rq",
     "django_object_actions",
-    "myproject.episodes",
-    "myproject.podcasts",
     "myproject.users",
 ]
 
@@ -119,8 +106,6 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "myproject.common.middleware.CacheControlMiddleware",
-    "myproject.common.middleware.SearchMiddleware",
-    "myproject.episodes.middleware.PlayerMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -158,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-HOME_URL = LOGIN_REDIRECT_URL = reverse_lazy("podcasts:index")
+HOME_URL = LOGIN_REDIRECT_URL = "/"
 
 LOGIN_URL = "account_login"
 
@@ -246,7 +231,4 @@ LOGGING = {
 
 PROJECT_METADATA = {
     "contact_email": env("CONTACT_EMAIL", default="admin@localhost"),
-    "twitter": env("TWITTER_ACCOUNT", default=None),
-    "host_country": env("HOST_COUNTRY", default="Finland"),
-    "age_of_consent": env.int("AGE_OF_CONSENT", default=18),
 }

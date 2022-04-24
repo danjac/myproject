@@ -39,8 +39,6 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):  # type: ignore
 
 
 class User(AbstractUser):
-    send_email_notifications: bool = models.BooleanField(default=True)
-
     objects = UserManager()
 
     def get_email_addresses(self) -> set[str]:

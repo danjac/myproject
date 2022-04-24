@@ -12,6 +12,8 @@ from django.views.decorators.http import require_http_methods
 
 from myproject.common.http import HttpResponseNoContent
 
+DISALLOW_URLS: list[str] = []
+
 
 @require_http_methods(["GET"])
 def health_check(request: HttpRequest) -> HttpResponse:
@@ -55,14 +57,7 @@ def robots(request: HttpRequest) -> HttpResponse:
         "\n".join(
             [
                 "User-Agent: *",
-                *[
-                    f"Disallow: {url}"
-                    for url in [
-                        "/account/",
-                        "/favorites/",
-                        "/history/",
-                    ]
-                ],
+                *[f"Disallow: {url}" for url in [DISALLOW_URLS]],
                 f"Sitemap: {request.build_absolute_uri(reverse('sitemap'))}",
             ]
         ),
